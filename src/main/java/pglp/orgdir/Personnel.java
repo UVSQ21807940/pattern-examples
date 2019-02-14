@@ -10,7 +10,7 @@ import java.util.List;
  * @author hal
  * @version 2019
  */
-public class Personnel {
+public class Personnel extends OrganizationElement {
   public static LocalDate DEFAULT_DATE = LocalDate.of(2000, 1, 1);
 
   private String firstname;
@@ -47,6 +47,11 @@ public class Personnel {
             "lastname='" + lastname + '\'' +
             ", firstname='" + firstname + '\'' +
             '}';
+  }
+
+  @Override
+  public String getDescription() {
+    return firstname + " " + lastname;
   }
 
   public static class Builder {

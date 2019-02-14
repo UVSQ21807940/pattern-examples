@@ -1,5 +1,6 @@
 package pglp.orgdir;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import java.time.LocalDate;
@@ -10,6 +11,15 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 public class PersonnelTest {
+  private Personnel luke;
+
+  @Before
+  public void setup() {
+    luke = new Personnel.Builder("Luke", "Skywalker")
+            .dateOfBirth(2007, 10, 4)
+            .build();
+  }
+
   @Test
   public void shouldCreateAPersonnelWithAGivenName() {
     Personnel p = new Personnel.Builder("Luke", "Skywalker").build();
@@ -29,20 +39,17 @@ public class PersonnelTest {
 
   @Test
   public void shouldCreateAPersonnelWithADoB() {
-    Personnel p = new Personnel.Builder("Luke", "Skywalker")
-      .dateOfBirth(2007, 10, 4)
-      .build();
-
-    assertPersonnel(p, "Luke", "Skywalker", Collections.emptyList(), 2007, 10, 4);
+    assertPersonnel(luke, "Luke", "Skywalker", Collections.emptyList(), 2007, 10, 4);
   }
 
   @Test
   public void shouldGenerateAValidString() {
-    Personnel p = new Personnel.Builder("Luke", "Skywalker")
-            .dateOfBirth(2007, 10, 4)
-            .build();
+    assertEquals("Personnel{lastname='Skywalker', firstname='Luke'}", luke.toString());
+  }
 
-    assertEquals("Personnel{lastname='Skywalker', firstname='Luke'}", p.toString());
+  @Test
+  public void shouldGenerateADescription() {
+    assertEquals("Luke Skywalker", luke.getDescription());
   }
 
   private static void assertPersonnel(Personnel p, String firstname, String lastname, List<String> functions, int year, int month, int dayOfMonth) {
