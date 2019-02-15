@@ -33,10 +33,20 @@ public class PersonnelGroup extends OrganizationElement {
     }
 
     @Override
-    protected void addSubElements(List<OrganizationElement> list) {
+    protected void addSubElementsDFS(List<OrganizationElement> list) {
         for(OrganizationElement element : personnels) {
             list.add(element);
-            element.addSubElements(list);
+            element.addSubElementsDFS(list);
+        }
+    }
+
+    @Override
+    protected void addSubElementsBFS(List<OrganizationElement> list) {
+        for(OrganizationElement element : personnels) {
+            list.add(element);
+        }
+        for(OrganizationElement element : personnels) {
+            element.addSubElementsBFS(list);
         }
     }
 

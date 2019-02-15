@@ -50,7 +50,10 @@ public class Personnel extends OrganizationElement {
   }
 
   @Override
-  protected void addSubElements(List<OrganizationElement> list) {}
+  protected void addSubElementsDFS(List<OrganizationElement> list) {}
+
+  @Override
+  protected void addSubElementsBFS(List<OrganizationElement> list) {}
 
   @Override
   public String getDescription() {

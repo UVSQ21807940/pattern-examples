@@ -12,10 +12,26 @@ import static org.junit.Assert.assertTrue;
 
 public class PersonnelGroupTest {
     private Personnel luke;
+    private PersonnelGroup starwars;
+    private List<OrganizationElement> starwarsDFS;
+    private List<OrganizationElement> starwarsBFS;
 
     @Before
     public void setup() {
         luke = new Personnel.Builder("Luke", "Skywalker").build();
+        starwars = new PersonnelGroup("Star Wars");
+        PersonnelGroup jedi = new PersonnelGroup("Jedi");
+        PersonnelGroup empire = new PersonnelGroup("Empire");
+        starwars.add(jedi);
+        starwars.add(empire);
+        jedi.add(luke);
+        Personnel obiwan = new Personnel.Builder("Obiwan", "Kenobi").build();
+        jedi.add(obiwan);
+        Personnel darkvador = new Personnel.Builder("Dark", "Vador").build();
+        empire.add(darkvador);
+
+        starwarsDFS = Arrays.asList(starwars, jedi, luke, obiwan, empire, darkvador);
+        starwarsBFS = Arrays.asList(starwars, jedi, empire, luke, obiwan, darkvador);
     }
 
     @Test
@@ -47,17 +63,23 @@ public class PersonnelGroupTest {
     }
 
     @Test
-    public void shouldIterate() {
-        PersonnelGroup pg1 = new PersonnelGroup("Département 1");
-        PersonnelGroup pg2 = new PersonnelGroup("Département 2");
-        pg1.add(pg2);
-        pg2.add(luke);
-
+    public void shouldIterateDFS() {
         List<OrganizationElement> elements = new ArrayList<>();
-        for (OrganizationElement element : pg1) {
+        for (OrganizationElement element : starwars) {
             elements.add(element);
         }
 
-         assertEquals(Arrays.asList(pg1, pg2, luke), elements);
+         assertEquals(starwarsDFS, elements);
+    }
+
+    @Test
+    public void shouldIterateBFS() {
+        starwars.setStrategy(OrganizationElement.TraversalStrategy.BFS);
+        List<OrganizationElement> elements = new ArrayList<>();
+        for (OrganizationElement element : starwars) {
+            elements.add(element);
+        }
+
+        assertEquals(starwarsBFS, elements);
     }
 }
