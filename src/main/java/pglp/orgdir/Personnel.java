@@ -50,6 +50,9 @@ public class Personnel extends OrganizationElement {
   }
 
   @Override
+  protected void addSubElements(List<OrganizationElement> list) {}
+
+  @Override
   public String getDescription() {
     return firstname + " " + lastname;
   }

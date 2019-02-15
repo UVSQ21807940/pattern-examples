@@ -26,6 +26,21 @@ public class PersonnelGroup extends OrganizationElement {
     }
 
     @Override
+    public String toString() {
+        return "PersonnelGroup{" +
+                "name='" + name + '\'' +
+                '}';
+    }
+
+    @Override
+    protected void addSubElements(List<OrganizationElement> list) {
+        for(OrganizationElement element : personnels) {
+            list.add(element);
+            element.addSubElements(list);
+        }
+    }
+
+    @Override
     public String getDescription() {
         return name + " ["
                 + personnels.stream()
